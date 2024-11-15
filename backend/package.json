@@ -11,5 +11,12 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/config": "^3.3.0",
+    "@nestjs/microservices": "^10.4.8",
+    "@nestjs/schedule": "^4.1.1",
+    "kafkajs": "^2.2.4",
+    "reflect-metadata": "^0.2.2"
+  }
 }
