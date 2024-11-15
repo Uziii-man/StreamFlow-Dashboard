@@ -1,0 +1,15 @@
+{
+  "name": "streamflow-dashboard-backend",
+  "version": "1.0.0",
+  "description": "Backend for StreamFlow Dashboard",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
