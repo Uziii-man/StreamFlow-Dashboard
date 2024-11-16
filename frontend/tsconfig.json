@@ -1,33 +1,54 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
-{
-  "compileOnSave": false,
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "moduleResolution": "bundler",
-    "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+"build": {
+  "builder": "@angular-devkit/build-angular:application",
+  "options": {
+    "outputPath": "dist/frontend",
+    "index": "src/index.html",
+    "main": "src/main.ts",
+    "polyfills": [
+      "zone.js"
+    ],
+    "tsConfig": "tsconfig.app.json",
+    "inlineStyleLanguage": "scss",
+    "assets": [
+      "src/assets"
+    ],
+    "styles": [
+      "src/styles.scss"
+    ],
+    "scripts": []
   },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+  "configurations": {
+    "production": {
+      "budgets": [
+        {
+          "type": "initial",
+          "maximumWarning": "500kB",
+          "maximumError": "1MB"
+        },
+        {
+          "type": "anyComponentStyle",
+          "maximumWarning": "2kB",
+          "maximumError": "4kB"
+        }
+      ],
+      "outputHashing": "all",
+      "optimization": true,
+      "sourceMap": false,
+      "extractCss": true,
+      "namedChunks": false,
+      "aot": true,
+      "extractLicenses": true,
+      "vendorChunk": false,
+      "buildOptimizer": true
+    },
+    "development": {
+      "optimization": false,
+      "sourceMap": true,
+      "extractCss": false,
+      "namedChunks": true,
+      "aot": false,
+      "vendorChunk": true
+    }
+  },
+  "defaultConfiguration": "production"
 }
