@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - '2181:2181'
+    restart: always # Ensures the container restarts if it crashes
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - '9092:9092'
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost # Change if running in Docker network
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true' # Automatically create topics (optional)
+      KAFKA_LOG_RETENTION_HOURS: 168 # Retain logs for a week (optional)
+      KAFKA_OFFSETS_RETENTION_MINUTES: 10080 # Retain offsets for a week (optional)
+    depends_on:
+      - zookeeper
+    restart: always # Ensures the container restarts if it crashes
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - '6379:6379' # Redis default port
+    restart: always # Restart policy for resilience
+    command: redis-server --appendonly yes # Enable Redis persistence
+    volumes:
+      - redis-data:/data # Use a named volume for data persistence
+
+volumes:
+  redis-data: {}
