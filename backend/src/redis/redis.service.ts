@@ -4,11 +4,16 @@ import { createClient, RedisClientType } from 'redis';
 @Injectable()
 export class RedisService {
   private readonly redisClient: RedisClientType;
+  
 
   constructor() {
+    const redisHost = process.env.REDIS_HOST || 'localhost';
+    const redisPort = parseInt(process.env.REDIS_PORT || '6379');
+
     this.redisClient = createClient({
-      url: 'redis://localhost:6379', // Change the URL if Redis runs elsewhere
+      url: `redis://${redisHost}:${redisPort}`,
     });
+    
     this.redisClient.on('error', (err) => {
       console.error('Redis Client Error', err);
     });

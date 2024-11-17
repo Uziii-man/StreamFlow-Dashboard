@@ -5,13 +5,13 @@ import { Kafka, Producer, ProducerRecord } from 'kafkajs';
 export class ProducerService implements OnModuleInit, OnApplicationShutdown{
 
     private readonly kafka = new Kafka({
-        clientId: 'nestjs-producer', // Added clientId for better monitoring/logging
-        brokers: ['localhost:9092'], 
+        clientId: 'nestjs-consumer', // Add a client ID for better monitoring/logging
+        brokers: [process.env.KAFKA_BROKER || 'localhost:9092'], // use environment variable or fallback to localhost
         retry: {
-          retries: 5, // Number of retries for sending messages
-          initialRetryTime: 300, // Time in ms before the first retry
+          retries: 5, // Configure retry options for consumer connection
+          initialRetryTime: 300, // Retry interval in ms
         },
-    });
+      });
 
     private readonly producer: Producer = this.kafka.producer();
 

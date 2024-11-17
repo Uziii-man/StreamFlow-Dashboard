@@ -5,14 +5,14 @@ import { Consumer, ConsumerRunConfig, ConsumerSubscribeTopics, Kafka } from 'kaf
 @Injectable()
 export class ConsumerService implements OnModuleInit, OnApplicationShutdown {
 
-    private readonly kafka = new Kafka({ 
+    private readonly kafka = new Kafka({
         clientId: 'nestjs-consumer', // Add a client ID for better monitoring/logging
-        brokers: ['localhost:9092'], // Specify the Kafka broker(s)
+        brokers: [process.env.KAFKA_BROKER || 'localhost:9092'], // use environment variable or fallback to localhost
         retry: {
           retries: 5, // Configure retry options for consumer connection
-          initialRetryTime: 300,
+          initialRetryTime: 300, // Retry interval in ms
         },
-    });
+      });
 
     private readonly consumers: Consumer[] = [];
 

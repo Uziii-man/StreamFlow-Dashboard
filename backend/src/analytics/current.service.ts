@@ -5,6 +5,7 @@ import { RedisService } from 'src/redis/redis.service';
 export class CurrentService {
   constructor(private readonly redisService: RedisService) {}
 
+  // Fetch the latest values for temperature, humidity, and product
   async getCurrentData(): Promise<any> {
     const temperatureKey = 'temperature:*';
     const humidityKey = 'humidity:*';
@@ -21,6 +22,7 @@ export class CurrentService {
     };
   }
 
+  // Get the latest value for a given pattern
   private async getLatestValue(pattern: string): Promise<number | null> {
     const keys = await this.redisService.keys(pattern);
     if (!keys.length) return null;

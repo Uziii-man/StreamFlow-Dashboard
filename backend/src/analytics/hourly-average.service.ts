@@ -3,6 +3,8 @@ import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class HourlyAverageService {
+  private readonly CACHE_TTL = 15; // Cache for 15 seconds
+
   constructor(private readonly redisService: RedisService) {}
 
   async calculateHourlyAverage(): Promise<any> {
@@ -19,6 +21,15 @@ export class HourlyAverageService {
 
   private async calculateAverageForKey(pattern: string, field: string): Promise<number> {
     const now = Date.now();
+    const cacheKey = `average:${field}`;
+
+    // Check if a cached value exists
+    const cachedValue = await this.redisService.get<{ [key: string]: number }>(cacheKey);
+    if (cachedValue && cachedValue[field] !== undefined) {
+      return cachedValue[field];
+    }
+
+    // Calculate the time range for the
     const oneHourAgo = now - 3600 * 1000;
 
     // Fetch keys matching the pattern
@@ -30,7 +41,6 @@ export class HourlyAverageService {
       return !isNaN(timestamp) && timestamp >= oneHourAgo && timestamp <= now;
     });
 
-    // If no data for the last hour, use all available data
     const finalKeys = relevantKeys.length > 0 ? relevantKeys : keys;
 
     // Fetch values for the selected keys
@@ -38,18 +48,20 @@ export class HourlyAverageService {
       finalKeys.map((key) => this.redisService.get(key)),
     );
 
-    // Adjusted parsing logic to handle specific field names (temperature, humidity, productCount)
     const parsedValues = values
       .filter((value) => value !== null)
-      .map((value) => value[field]); // Use the specific field name
+      .map((value) => value[field]);
 
     if (!parsedValues.length) return 0;
 
     // Calculate the average
     const sum = parsedValues.reduce((acc, val) => acc + val, 0);
-    const average =  sum / parsedValues.length;
+    const average = Math.round((sum / parsedValues.length) * 100) / 100;
 
-    return Math.round(average * 100) / 100;
+    // Cache the average
+    await this.redisService.set(cacheKey, { [field]: average }, this.CACHE_TTL);
+
+    return average;
   }
 }
 

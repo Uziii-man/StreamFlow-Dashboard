@@ -53,59 +53,43 @@
 
 
 
-// import { Injectable } from '@nestjs/common';
-// import { RedisService } from 'src/redis/redis.service';
-
-// @Injectable()
-// export class MaxAverageService {
-//   constructor(private readonly redisService: RedisService) {}
-
-//   async getMaxHourlyAverage(): Promise<any> {
-//     const temperatureMax = await this.calculateMaxAverage('temperature:*');
-//     const humidityMax = await this.calculateMaxAverage('humidity:*');
-//     const productCountMax = await this.calculateMaxAverage('product-count:*');
-
-//     return { temperatureMax, humidityMax, productCountMax };
-//   }
-
-//   private async calculateMaxAverage(pattern: string): Promise<number> {
-//     const keys = await this.redisService.keys(pattern);
-//     const now = Date.now();
-//     const oneHourAgo = now - 3600 * 1000;
-
-//     const relevantKeys = keys.filter((key) => {
-//       const timestamp = parseInt(key.split(':')[1], 10);
-//       return timestamp >= oneHourAgo && timestamp <= now;
-//     });
-
-//     const values = await Promise.all(
-//       relevantKeys.map((key) => this.redisService.get(key)),
-//     );
-
-//     const parsedValues = values
-//       .filter((value) => value !== null)
-//       .map((value) => value.value);
-
-//     if (!parsedValues.length) return 0;
-//     return Math.max(...parsedValues);
-//   }
-// }
-
-
 import { Injectable } from '@nestjs/common';
-import { HourlyAverageService } from './hourly-average.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class MaxAverageService {
-  constructor(private readonly hourlyAverageService: HourlyAverageService) {}
+  constructor(private readonly redisService: RedisService) {}
 
-  async calculateMaxAverage(): Promise<any> {
-    const hourlyAverages = await this.hourlyAverageService.calculateHourlyAverage();
+  async getMaxHourlyAverage(): Promise<any> {
+    const temperatureMax = await this.calculateMaxAverage('temperature:*');
+    const humidityMax = await this.calculateMaxAverage('humidity:*');
+    const productCountMax = await this.calculateMaxAverage('product-count:*');
 
-    return {
-      maxTemperatureAvg: hourlyAverages.temperatureAvg || 0,
-      maxHumidityAvg: hourlyAverages.humidityAvg || 0,
-      maxProductCountAvg: hourlyAverages.productCountAvg || 0,
-    };
+    return { temperatureMax, humidityMax, productCountMax };
+  }
+
+  private async calculateMaxAverage(pattern: string): Promise<number> {
+    const keys = await this.redisService.keys(pattern);
+    const now = Date.now();
+    const oneHourAgo = now - 3600 * 1000;
+
+    // Filter keys within the last hour
+    const relevantKeys = keys.filter((key) => {
+      const timestamp = parseInt(key.split(':')[1], 10);
+      return timestamp >= oneHourAgo && timestamp <= now;
+    });
+
+    // Fetch values for the relevant keys
+    const values = await Promise.all(
+      relevantKeys.map((key) => this.redisService.get(key)),
+    );
+
+    const parsedValues = values
+      .filter((value) => value !== null)
+      .map((value) => value.value);
+
+    if (!parsedValues.length) return 0;
+    return Math.max(...parsedValues);
   }
 }
+
