@@ -1,44 +1,48 @@
-<div class="dashboard-grid">
-    <!-- Current Values -->
-    <div class="cell">
-      <h3>Temperature</h3>
-      <p>{{ current.temperature }}°C</p>
-    </div>
-    <div class="cell">
-      <h3>Humidity</h3>
-      <p>{{ current.humidity }}%</p>
-    </div>
-    <div class="cell">
-      <h3>Product Count</h3>
-      <p>{{ current.productCount }}</p>
-    </div>
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Stream Flow Dashboard</h1>
+    <div class="dashboard-grid">
+      <!-- Current Values -->
+      <div class="cell temperature">
+        <h3>Temperature</h3>
+        <p>{{ current.temperature || 'N/A' }}°C</p>
+      </div>
+      <div class="cell humidity">
+        <h3>Humidity</h3>
+        <p>{{ current.humidity || 'N/A' }}%</p>
+      </div>
+      <div class="cell product-count">
+        <h3>Product Count</h3>
+        <p>{{ current.productCount || 'N/A' }}</p>
+      </div>
   
-    <!-- Hourly Averages -->
-    <div class="cell">
-      <h3>Avg Temp (1hr)</h3>
-      <p>{{ hourlyAverages.temperature }}°C</p>
-    </div>
-    <div class="cell">
-      <h3>Avg Humidity (1hr)</h3>
-      <p>{{ hourlyAverages.humidity }}%</p>
-    </div>
-    <div class="cell">
-      <h3>Avg Product Count (1hr)</h3>
-      <p>{{ hourlyAverages.productCount }}</p>
-    </div>
+      <!-- Hourly Averages -->
+      <div class="cell average-temperature">
+        <h3>Avg Temp (1hr)</h3>
+        <p>{{ hourlyAverages.temperature || 'N/A' }}°C</p>
+      </div>
+      <div class="cell average-humidity">
+        <h3>Avg Humidity (1hr)</h3>
+        <p>{{ hourlyAverages.humidity || 'N/A' }}%</p>
+      </div>
+      <div class="cell average-product-count">
+        <h3>Avg Product Count (1hr)</h3>
+        <p>{{ hourlyAverages.productCount || 'N/A' }}</p>
+      </div>
   
-    <!-- Maximum Hourly Averages -->
-    <div class="cell">
-      <h3>Max Temp (1hr)</h3>
-      <p>{{ maxHourly.temperature }}°C</p>
+      <!-- Maximum Hourly Averages -->
+      <div class="cell max-temperature">
+        <h3>Max Temp (1hr)</h3>
+        <p>{{ maxHourly.temperature || 'N/A' }}°C</p>
+      </div>
+      <div class="cell max-humidity">
+        <h3>Max Humidity (1hr)</h3>
+        <p>{{ maxHourly.humidity || 'N/A' }}%</p>
+      </div>
+      <div class="cell max-product-count">
+        <h3>Max Product Count (1hr)</h3>
+        <p>{{ maxHourly.productCount || 'N/A' }}</p>
+      </div>
     </div>
-    <div class="cell">
-      <h3>Max Humidity (1hr)</h3>
-      <p>{{ maxHourly.humidity }}%</p>
-    </div>
-    <div class="cell">
-      <h3>Max Product Count (1hr)</h3>
-      <p>{{ maxHourly.productCount }}</p>
-    </div>
-</div>
+  </div>
 
+  

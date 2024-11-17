@@ -12,6 +12,7 @@ describe('DashboardComponent', () => {
     })
     .compileComponents();
 
+    // fixture means a container that holds a component and provides utility functions for testing the component
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

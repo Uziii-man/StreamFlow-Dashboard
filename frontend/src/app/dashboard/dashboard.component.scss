@@ -1,4 +1,21 @@
-.dashboard-grid {
+.dashboard-container {
+    padding: 20px;
+    background: linear-gradient(to bottom, #f7f9fc, #eef1f6);
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .dashboard-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
@@ -6,23 +23,70 @@
   }
   
   .cell {
-    background: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 12px;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
   
     h3 {
-      margin: 0 0 10px;
-      font-size: 1.2em;
-      color: #333;
+      margin: 0;
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
   
     p {
-      font-size: 1.5em;
+      font-size: 2rem;
+      font-weight: bold;
       margin: 0;
       color: #007bff;
     }
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
   }
+  
+  /* Unique styles for different tile types */
+  .temperature {
+    border-top: 5px solid #ff6f61;
+  }
+  
+  .humidity {
+    border-top: 5px solid #61b6ff;
+  }
+  
+  .product-count {
+    border-top: 5px solid #28a745;
+  }
+  
+  .average-temperature {
+    border-top: 5px solid #ff8c42;
+  }
+  
+  .average-humidity {
+    border-top: 5px solid #42c5f5;
+  }
+  
+  .average-product-count {
+    border-top: 5px solid #85d534;
+  }
+  
+  .max-temperature {
+    border-top: 5px solid #ff4747;
+  }
+  
+  .max-humidity {
+    border-top: 5px solid #4747ff;
+  }
+  
+  .max-product-count {
+    border-top: 5px solid #34c334;
+  }
+
   
