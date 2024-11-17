@@ -14,7 +14,7 @@ export class RedisService {
     });
 
     this.redisClient.connect().then(() => {
-      console.log('Connected to Redis');
+      console.log('Connected to Redis in printed in redis Service');
     });
   }
 

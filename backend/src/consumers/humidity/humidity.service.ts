@@ -19,7 +19,7 @@ export class HumidityService implements OnModuleInit, OnApplicationShutdown {
           const value = JSON.parse(message.value?.toString() || '{}');
 
           if (key === 'humidity') {
-            console.log('Humidity Data Consumed:', value, '\n');
+            // console.log('Humidity Data Consumed:', value, '\n');
             // Handle humidity data here
 
             // store data in Redis

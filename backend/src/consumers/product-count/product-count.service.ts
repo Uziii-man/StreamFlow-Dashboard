@@ -19,7 +19,7 @@ export class ProductCountService implements OnModuleInit, OnApplicationShutdown 
           const value = JSON.parse(message.value?.toString() || '{}');
 
           if (key === 'product-count') {
-            console.log('Product Count Data Consumed:', value, '\n');
+            // console.log('Product Count Data Consumed:', value, '\n');
             // Handle product-count data here
 
             // store data in Redis

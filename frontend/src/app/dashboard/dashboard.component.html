@@ -1,0 +1,44 @@
+<div class="dashboard-grid">
+    <!-- Current Values -->
+    <div class="cell">
+      <h3>Temperature</h3>
+      <p>{{ current.temperature }}°C</p>
+    </div>
+    <div class="cell">
+      <h3>Humidity</h3>
+      <p>{{ current.humidity }}%</p>
+    </div>
+    <div class="cell">
+      <h3>Product Count</h3>
+      <p>{{ current.productCount }}</p>
+    </div>
+  
+    <!-- Hourly Averages -->
+    <div class="cell">
+      <h3>Avg Temp (1hr)</h3>
+      <p>{{ hourlyAverages.temperature }}°C</p>
+    </div>
+    <div class="cell">
+      <h3>Avg Humidity (1hr)</h3>
+      <p>{{ hourlyAverages.humidity }}%</p>
+    </div>
+    <div class="cell">
+      <h3>Avg Product Count (1hr)</h3>
+      <p>{{ hourlyAverages.productCount }}</p>
+    </div>
+  
+    <!-- Maximum Hourly Averages -->
+    <div class="cell">
+      <h3>Max Temp (1hr)</h3>
+      <p>{{ maxHourly.temperature }}°C</p>
+    </div>
+    <div class="cell">
+      <h3>Max Humidity (1hr)</h3>
+      <p>{{ maxHourly.humidity }}%</p>
+    </div>
+    <div class="cell">
+      <h3>Max Product Count (1hr)</h3>
+      <p>{{ maxHourly.productCount }}</p>
+    </div>
+</div>
+

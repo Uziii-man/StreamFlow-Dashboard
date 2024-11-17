@@ -10,6 +10,6 @@ export class TemperatureService {
     async generateTemperature() {
         const temperature = parseFloat((Math.random() * 10 + 20).toFixed(2));
         await this.kafkaProducer.produce('sensor-data', 'temperature', { temperature });
-        console.log('Temperature sent:', temperature)       
+        // console.log('Temperature sent:', temperature)       
     }
 }

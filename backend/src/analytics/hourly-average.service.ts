@@ -6,13 +6,9 @@ export class HourlyAverageService {
   constructor(private readonly redisService: RedisService) {}
 
   async calculateHourlyAverage(): Promise<any> {
-    const temperatureKey = 'temperature:*';
-    const humidityKey = 'humidity:*';
-    const productCountKey = 'product-count:*';
-
-    const temperatureAvg = await this.getHourlyAverage(temperatureKey);
-    const humidityAvg = await this.getHourlyAverage(humidityKey);
-    const productCountAvg = await this.getHourlyAverage(productCountKey);
+    const temperatureAvg = await this.getAverageForKey('temperature:*');
+    const humidityAvg = await this.getAverageForKey('humidity:*');
+    const productCountAvg = await this.getAverageForKey('product-count:*');
 
     return {
       temperatureAvg,
@@ -21,26 +17,40 @@ export class HourlyAverageService {
     };
   }
 
-  private async getHourlyAverage(pattern: string): Promise<number> {
-    const keys = await this.redisService.keys(pattern);
+  private async getAverageForKey(pattern: string): Promise<number | null> {
     const now = Date.now();
     const oneHourAgo = now - 3600 * 1000;
 
+    // Fetch all matching keys
+    const keys = await this.redisService.keys(pattern);
+
     // Filter keys within the last hour
-    const recentKeys = keys.filter((key) => {
+    const relevantKeys = keys.filter((key) => {
       const timestamp = parseInt(key.split(':')[1], 10);
-      return timestamp >= oneHourAgo && timestamp <= now;
+      console.log("\nTimestamp: ", timestamp);
+      return !isNaN(timestamp) && timestamp >= oneHourAgo && timestamp <= now;
     });
 
-    if (!recentKeys.length) return 0;
+    if (!relevantKeys.length) {
+      console.log(`No data found for pattern: ${pattern}`);
+      return 0; // Return 0 if no data is found
+    }
 
-    // Fetch values and calculate average
+    // Fetch values for the relevant keys
     const values = await Promise.all(
-      recentKeys.map((key) => this.redisService.get(key)),
+      relevantKeys.map((key) => this.redisService.get(key))
     );
 
-    const sum = values.reduce((acc, val) => acc + (val ? val.value : 0), 0);
-    return sum / values.length;
+    // Extract numeric values and calculate average
+    const parsedValues = values
+      .filter((value) => value !== null)
+      .map((value) => value.value);
+
+    if (!parsedValues.length) return 0;
+
+    const sum = parsedValues.reduce((acc, val) => acc + val, 0);
+    console.log("\nHourly average: " ,sum, parsedValues.length);
+    return sum / parsedValues.length;
   }
 }
 

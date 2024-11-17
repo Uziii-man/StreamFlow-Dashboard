@@ -10,6 +10,6 @@ export class HumidityService {
   async generateHumidity() {
     const humidity = parseFloat((Math.random() * 100).toFixed(2));
     await this.kafkaProducer.produce('sensor-data', 'humidity', { humidity });
-    console.log('Humidity sent:', humidity);
+    // console.log('Humidity sent:', humidity);
   }
 }

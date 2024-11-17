@@ -19,7 +19,7 @@ export class TemperatureService implements OnModuleInit, OnApplicationShutdown {
           const value = JSON.parse(message.value?.toString() || '{}');
 
           if (key === 'temperature') {
-            console.log('Temperature Data Consumed:', value, '\n');
+            // console.log('Temperature Data Consumed:', value, '\n');
             // Handle temperature data here
 
             // store data in Redis

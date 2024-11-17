@@ -10,6 +10,6 @@ export class ProductCountService {
   async generateProductCount() {
     const productCount = Math.floor(Math.random() * 100);
     await this.kafkaProducer.produce('sensor-data', 'product-count', { productCount });
-    console.log('Product Count sent:', productCount);
+    // console.log('Product Count sent:', productCount);
   }
 }
