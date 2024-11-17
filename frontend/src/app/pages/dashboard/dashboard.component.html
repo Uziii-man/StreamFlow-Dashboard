@@ -1,0 +1,18 @@
+<div class="dashboard">
+    <!-- Current Data -->
+    <app-cell title="Current Temperature" [value]="currentData.temperature?.temperature"></app-cell>
+    <app-cell title="Current Humidity" [value]="currentData.humidity?.humidity"></app-cell>
+    <app-cell title="Current Product Count" [value]="currentData.productCount?.productCount"></app-cell>
+  
+    <!-- Hourly Average -->
+    <app-cell title="Average Temperature (1 Hour)" [value]="hourlyAverage.temperatureAvg"></app-cell>
+    <app-cell title="Average Humidity (1 Hour)" [value]="hourlyAverage.humidityAvg"></app-cell>
+    <app-cell title="Average Product Count (1 Hour)" [value]="hourlyAverage.productCountAvg"></app-cell>
+  
+    <!-- Maximum Hourly Average -->
+    <app-cell title="Max Temperature (1 Hour)" [value]="maxAverage.maxTemperatureAvg"></app-cell>
+    <app-cell title="Max Humidity (1 Hour)" [value]="maxAverage.maxHumidityAvg"></app-cell>
+    <app-cell title="Max Product Count (1 Hour)" [value]="maxAverage.maxProductCountAvg"></app-cell>
+  </div>
+
+  
