@@ -10,4 +10,3 @@ import { RedisService } from 'src/redis/redis.service';
   controllers: [AnalyticsController],
 })
 export class AnalyticsModule {}
-

@@ -23,6 +23,6 @@ export class AnalyticsController {
 
   @Get('max-average')
   async getMaxHourlyAverage() {
-    return this.maxAverageService.getMaxHourlyAverage();
+    return this.maxAverageService.calculateMaxAverage();
   }
 }

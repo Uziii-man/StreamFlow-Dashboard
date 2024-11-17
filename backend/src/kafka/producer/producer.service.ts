@@ -41,7 +41,7 @@ export class ProducerService implements OnModuleInit, OnApplicationShutdown{
 
         try{
             await this.producer.send(record);
-            console.log(`message sent to topic "${topic}" with key "${key}"`);
+            // console.log(`message sent to topic "${topic}" with key "${key}"`);
         } catch (error) {
             console.error(`error sending message to topic "${topic}":`, error.message);
         }         
