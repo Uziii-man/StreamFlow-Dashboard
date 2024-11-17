@@ -7,7 +7,10 @@ export class ConsumerService implements OnModuleInit, OnApplicationShutdown {
 
     private readonly kafka = new Kafka({
         clientId: 'nestjs-consumer', // Add a client ID for better monitoring/logging
-        brokers: [process.env.KAFKA_BROKER || 'localhost:9092'], // use environment variable or fallback to localhost
+        // brokers: [process.env.KAFKA_BROKER || 'localhost:9092'], // use environment variable or fallback to localhost
+
+        brokers: ['localhost:9092'], // use environment variable or fallback to localhost
+
         retry: {
           retries: 5, // Configure retry options for consumer connection
           initialRetryTime: 300, // Retry interval in ms

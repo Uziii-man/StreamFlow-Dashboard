@@ -56,12 +56,20 @@ export class HourlyAverageService {
 
     // Calculate the average
     const sum = parsedValues.reduce((acc, val) => acc + val, 0);
-    const average = Math.round((sum / parsedValues.length) * 100) / 100;
 
+    let average;
+
+    if (field === 'productCount') {
+        // For productCount, ensure an integer result
+        average = Math.floor(sum / parsedValues.length); // Or Math.ceil or Math.round as per your requirement
+    } else {
+        // For other fields, calculate float-based average
+        average = Math.round((sum / parsedValues.length) * 100) / 100;
+    }
+    
     // Cache the average
     await this.redisService.set(cacheKey, { [field]: average }, this.CACHE_TTL);
 
     return average;
   }
 }
-
