@@ -3,11 +3,11 @@ import { CurrentService } from './current.service';
 import { HourlyAverageService } from './hourly-average.service';
 import { MaxAverageService } from './max-average.service';
 import { AnalyticsController } from './analytics.controller';
-import { RedisModule } from '../redis/redis.module';
+import { RedisService } from 'src/redis/redis.service';
 
 @Module({
-  imports: [RedisModule],
-  providers: [CurrentService, HourlyAverageService, MaxAverageService],
+  providers: [CurrentService, HourlyAverageService, MaxAverageService, RedisService],
   controllers: [AnalyticsController],
 })
 export class AnalyticsModule {}
+

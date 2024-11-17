@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { RedisService } from '../redis/redis.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class CurrentService {
@@ -21,15 +21,12 @@ export class CurrentService {
     };
   }
 
-
   private async getLatestValue(pattern: string): Promise<number | null> {
     const keys = await this.redisService.keys(pattern);
     if (!keys.length) return null;
-  
-    const latestKey = keys.sort().pop();
-    // const value = latestKey ? await this.redisService.get(latestKey) : null;
 
-    const value = latestKey ? await this.redisService.get<{ value: number }>(latestKey) : null;
-    return value ? value.value : null;
+    const latestKey = keys.sort().pop(); // Get the latest timestamp-based key
+    const value = latestKey ? await this.redisService.get(latestKey) : null;
+    return value;
   }
 }
